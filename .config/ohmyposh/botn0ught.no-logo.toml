@@ -24,12 +24,13 @@ version = 2
     foreground = "#ffffff"
     powerline_symbol = ""
     style = "powerline"
-    template = "   {{ .Path }} "
+    template = "   {{ path .Path .Location }} "
     type = "path"
 
     [blocks.segments.properties]
       home_icon = "~"
-      style = "full"
+      style = "powerlevel"
+      max_width = "50"
 
   # git stats
   [[blocks.segments]]

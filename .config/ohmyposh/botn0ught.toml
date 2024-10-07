@@ -18,6 +18,9 @@ version = 2
     template = " {{ if .WSL }}WSL at {{ end }}{{.Icon}}  "
     type = "os"
 
+    [blocks.segments.properties]
+      windows = ""
+
   # username
   [[blocks.segments]]
     background = "#d3d7cf"
@@ -32,12 +35,13 @@ version = 2
     foreground = "#ffffff"
     powerline_symbol = ""
     style = "powerline"
-    template = "   {{ .Path }} "
+    template = "   {{ path .Path .Location }} "
     type = "path"
 
     [blocks.segments.properties]
       home_icon = "~"
-      style = "full"
+      style = "powerlevel"
+      max_width = "70"
 
   # git status
   [[blocks.segments]]
