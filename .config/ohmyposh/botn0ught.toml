@@ -19,8 +19,7 @@ version = 2
     type = "os"
 
     [blocks.segments.properties]
-      windows = ""
-
+      windows = "󰍲"
   # username
   [[blocks.segments]]
     background = "#d3d7cf"
