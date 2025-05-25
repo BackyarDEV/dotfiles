@@ -1,130 +1,116 @@
-"$schema" = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json"
-console_title_template = "{{ .Shell }} in {{ .Folder }}"
+console_title_template = '{{ .Shell }} in {{ .Folder }}'
+version = 3
 final_space = true
-version = 2
 
+[secondary_prompt]
+  template = '╰─❯❯ '
+  foreground = '#e0f8ff'
+  foreground_templates = ['{{ if gt .Code 0 }}#ef5350{{ end }}']
 
-# Left prompt
+[transient_prompt]
+  template = ' ─❯ '
+  foreground = '#e0f8ff'
+  foreground_templates = ['{{ if gt .Code 0 }}#ef5350{{ end }}']
+
 [[blocks]]
-  alignment = "left"
-  type = "prompt"
+  type = 'prompt'
+  alignment = 'left'
 
-  # OS
   [[blocks.segments]]
-    background = "#d3d7cf"
-    foreground = "#000000"
-    leading_diamond = "╭─"
-    style = "diamond"
-    template = " {{ if .WSL }}WSL at {{ end }}{{.Icon}}  "
-    type = "os"
+    leading_diamond = '╭─'
+    template = ' {{ if .WSL }}WSL at {{ end }}{{.Icon}}  '
+    foreground = '#000000'
+    background = '#d3d7cf'
+    type = 'os'
+    style = 'diamond'
 
     [blocks.segments.properties]
-      windows = "󰍲"
-  # username
+      cache_duration = 'none'
+      windows = '󰍲'
+
   [[blocks.segments]]
-    background = "#d3d7cf"
-    foreground = "#000000"
-    style = "diamond"
-    template = "{{ if .SSHSession }} {{ end }}{{ .UserName }} "
+    template = '{{ if .SSHSession }} {{ end }}<b>{{ .UserName }}</b>'
+    foreground = '#000000'
+    background = '#d3d7cf'
     type = 'session'
-
-  # path
-  [[blocks.segments]]
-    background = "#123243"
-    foreground = "#ffffff"
-    powerline_symbol = ""
-    style = "powerline"
-    template = "   {{ path .Path .Location }} "
-    type = "path"
+    style = 'diamond'
 
     [blocks.segments.properties]
-      home_icon = "~"
-      style = "powerlevel"
-      max_width = "70"
+      cache_duration = 'none'
 
-  # git status
   [[blocks.segments]]
-    background = "#4e9a06"
-    background_templates = [
-    "{{ if or (.Working.Changed) (.Staging.Changed) }}#c4a000{{ end }}",
-    "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#f26d50{{ end }}",
-    "{{ if gt .Ahead 0 }}#89d1dc{{ end }}",
-    "{{ if gt .Behind 0 }}#4e9a06{{ end }}"
-    ]
-    foreground = "#000000"
-    powerline_symbol = ""
-    style = "powerline"
-    template = " {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }} "
-    type = "git"
+    leading_diamond = ''
+    trailing_diamond = ''
+    template = 'in <p:blue><b>{{ .Name }}</b></>'
+    foreground = '#000000'
+    background = '#d3d7cf'
+    type = 'shell'
+    style = 'diamond'
 
     [blocks.segments.properties]
-      branch_icon = " "
+      cache_duration = 'none'
+
+  [[blocks.segments]]
+    template = 'at <p:blue><b>{{ .CurrentDate | date .Format }} '
+    foreground = '#000000'
+    background = '#d3d7cf'
+    type = 'time'
+    style = 'diamond'
+
+    [blocks.segments.properties]
+      cache_duration = 'none'
+
+  [[blocks.segments]]
+    type = "python"
+    style = "powerline"
+    powerline_symbol = ""
+    fetch_virtual_env = true
+    foreground = "#100e23"
+    background = '#4e9a06'
+    template = "  {{ .Venv }} "
+
+  [[blocks.segments]]
+    template = '   {{ path .Path .Location }} '
+    foreground = '#ffffff'
+    powerline_symbol = ''
+    background = '#123243'
+    type = 'path'
+    style = 'powerline'
+
+    [blocks.segments.properties]
+      cache_duration = 'none'
+      home_icon = '~'
+      max_width = '70'
+      style = 'powerlevel'
+
+  [[blocks.segments]]
+    template = ' {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }} '
+    foreground = '#000000'
+    powerline_symbol = ''
+    background = '#4e9a06'
+    type = 'git'
+    style = 'powerline'
+    background_templates = ['{{ if or (.Working.Changed) (.Staging.Changed) }}#c4a000{{ end }}', '{{ if and (gt .Ahead 0) (gt .Behind 0) }}#f26d50{{ end }}', '{{ if gt .Ahead 0 }}#89d1dc{{ end }}', '{{ if gt .Behind 0 }}#4e9a06{{ end }}']
+
+    [blocks.segments.properties]
+      branch_icon = ' '
+      cache_duration = 'none'
       fetch_stash_count = true
       fetch_status = true
       fetch_upstream_icon = true
 
 
-# Right prompt
 [[blocks]]
-  alignment = "right"
-  type = "prompt"
-
-  # shell name
-  [[blocks.segments]]
-    background = "#123243"
-    foreground = "#ffffff"
-    type = 'shell'
-    style = "diamond"
-    leading_diamond = ""
-    trailing_diamond = ""
-    template = ' in <p:blue><b>{{ .Name }}</b></> '
-
-  # time
-  [[blocks.segments]]
-    background = "#d3d7cf"
-    foreground = "#000000"
-    invert_powerline = true
-    style = "diamond"
-    template = " at <p:blue><b>{{ .CurrentDate | date .Format }}   "
-    trailing_diamond = "─╮"
-    type = "time"
-  
-
-# rpromt
-[[blocks]]
-  type = "rprompt"
-  
-  [[blocks.segments]]
-    foreground = "#d3d7cf"
-    style = "plain"
-    template = " ─╯"
-    type = "text"
-
-
-# Left newLine prompt
-[[blocks]]
-  alignment = "left"
+  type = 'prompt'
+  alignment = 'left'
   newline = true
-  type = "prompt"
 
   [[blocks.segments]]
-    foreground = "#d3d7cf"
-    foreground_templates = [ "{{ if gt .Code 0 }}#ef5350{{ end }}" ]
-    style = "plain"
-    template = "╰─❯"
-    type = "text"
+    template = '╰─❯'
+    foreground = '#d3d7cf'
+    type = 'text'
+    style = 'plain'
+    foreground_templates = ['{{ if gt .Code 0 }} #ef5350 {{ end }}']
 
-
-# Secondary prompt
-[secondary_prompt]
-  foreground = "#e0f8ff"
-  foreground_templates = [ "{{ if gt .Code 0 }}#ef5350{{ end }}" ]
-  template = '╰─❯❯ '
-
-
-# Transient prompt
-[transient_prompt]
-  foreground = "#e0f8ff"
-  foreground_templates = [ "{{ if gt .Code 0 }}#ef5350{{ end }}" ]
-  template = " ─❯ "
-
+    [blocks.segments.properties]
+      cache_duration = 'none'
