@@ -1,6 +1,11 @@
+JAVA_HOME=/home/botn0ught/.local/share/java/current
+MVN_HOME=/home/botn0ught/.local/share/mvn/current
+MAVEN_OPTS="--enable-native-access=ALL-UNNAMED"
+JDK_JAVA_OPTIONS="--enable-native-access=ALL-UNNAMED"
 
-export PATH=$PATH:/home/botn0ught/.local/bin
-
+export JAVA_HOME=$JAVA_HOME
+export MVN_HOME=$MVN_HOME
+export PATH=$PATH:/home/botn0ught/.local/bin:$MVN_HOME/bin:$JAVA_HOME/bin
 
 # Configure color-scheme
 COLOR_SCHEME=dark # dark/light
@@ -13,6 +18,7 @@ alias rm='rm -I'
 alias mv='mv -iv'
 alias ln='ln -sriv'
 alias xclip='xclip -selection c'
+alias sublime='/opt/sublime_text/sublime_text'
 command -v nvim > /dev/null && alias vi='nvim'
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/botn0ught.toml)"
 
@@ -27,7 +33,7 @@ alias ip='ip --color=auto'
 alias pacman='pacman --color=auto'
 
 ### LS & TREE
-alias ll='ls -la'
+alias ll='ls -lah'
 alias la='ls -A'
 alias l='ls -F'
 command -v lsd > /dev/null && alias ls='lsd --group-dirs first' && \
