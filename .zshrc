@@ -18,7 +18,8 @@ alias rm='rm -I'
 alias mv='mv -iv'
 alias ln='ln -sriv'
 alias xclip='xclip -selection c'
-alias sublime='/opt/sublime_text/sublime_text'
+alias mountEfi='sudo mkdir /Volumes/EFI && sudo sudo diskutil mount -mountPoint /Volumes/EFI /dev/disk3s1'
+
 command -v nvim > /dev/null && alias vi='nvim'
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/botn0ught.toml)"
 
@@ -40,16 +41,6 @@ command -v lsd > /dev/null && alias ls='lsd --group-dirs first' && \
 	alias tree='lsd --tree'
 command -v colorls > /dev/null && alias ls='colorls --sd --gs' && \
 	alias tree='colorls --tree'
-### CAT & LESS
-command -v bat > /dev/null && \
-	alias bat='bat --theme=ansi' && \
-	alias cat='bat --pager=never' && \
-	alias less='bat'
-# in debian the command is batcat
-command -v batcat > /dev/null && \
-	alias batcat='batcat --theme=ansi' && \
-	alias cat='batcat --pager=never' && \
-	alias less='batcat'
 
 ### TOP
 command -v htop > /dev/null && alias top='htop'
@@ -160,11 +151,18 @@ esac
 # Plugin source helper
 _source_plugin() {
 	local plugin_name="$1"
-	for basedir in /usr/share/zsh/plugins /usr/share
+	local basedir plugin
+
+	for basedir in \
+		/opt/local/share \
+		/opt/local/share/zsh/plugins \
+		/usr/share/zsh/plugins \
+		/usr/share
 	do
 		plugin="$basedir/$plugin_name/$plugin_name.zsh"
 		[ -f "$plugin" ] && source "$plugin" && return 0
 	done
+
 	echo "\033[33m[ ! ]\033[0m ZSH ${plugin_name#zsh-} not installed"
 	return 1
 }
